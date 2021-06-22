@@ -34,4 +34,33 @@ sim:/top/dut_u/tr_pma_wrapper_u/pma_tx_clk \
 sim:/top/dut_u/tr_pma_wrapper_u/pma_tx_rdy \
 sim:/top/dut_u/tr_pma_wrapper_u/tx_serial
 
+add wave -divider #pcs_in_32b_u#
+add wave -position insertpoint  \
+sim:/top/dut_u/pcs_in_32b_u/clk \
+sim:/top/dut_u/pcs_in_32b_u/pma_data \
+sim:/top/dut_u/pcs_in_32b_u/rst \
+sim:/top/dut_u/pcs_in_32b_u/pma_slip \
+sim:/top/dut_u/pcs_in_32b_u/pma_sync \
+sim:/top/dut_u/pcs_in_32b_u/xgmii_rx
+
+add wave -divider #align_rx_32b_u#
+add wave -position insertpoint  \
+sim:/top/dut_u/pcs_in_32b_u/align_rx_32b_u/clk \
+sim:/top/dut_u/pcs_in_32b_u/align_rx_32b_u/din \
+sim:/top/dut_u/pcs_in_32b_u/align_rx_32b_u/rst \
+sim:/top/dut_u/pcs_in_32b_u/align_rx_32b_u/ctrl \
+sim:/top/dut_u/pcs_in_32b_u/align_rx_32b_u/dout \
+sim:/top/dut_u/pcs_in_32b_u/align_rx_32b_u/dout_en \
+sim:/top/dut_u/pcs_in_32b_u/align_rx_32b_u/even
+
+add wave -divider #blsync_rx_u#
+add wave -position insertpoint  \
+sim:/top/dut_u/pcs_in_32b_u/blsync_rx_u/clk \
+sim:/top/dut_u/pcs_in_32b_u/blsync_rx_u/header \
+sim:/top/dut_u/pcs_in_32b_u/blsync_rx_u/header_ena \
+sim:/top/dut_u/pcs_in_32b_u/blsync_rx_u/rst \
+sim:/top/dut_u/pcs_in_32b_u/blsync_rx_u/block_lock \
+sim:/top/dut_u/pcs_in_32b_u/blsync_rx_u/slp
+
+
 run -a

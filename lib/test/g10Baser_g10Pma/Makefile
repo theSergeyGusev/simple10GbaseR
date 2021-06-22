@@ -43,7 +43,10 @@ LIBSRC:= \
    	./sync.sv \
 	./tr_baser_wrapper/tr_baser_wrapper.sv \
 	./tr_pma_wrapper/tr_pma_wrapper.sv \
-	
+	./align_rx_32b/align_rx_32b.sv \
+	./blsync_rx/blsync_rx.sv \
+	./pcs_rx_32b/pcs_rx_32b.sv \
+
 TESTSRC:= \
 	./../vsim_common/test_type.sv \
 	./interface.sv \
