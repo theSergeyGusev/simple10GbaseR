@@ -12,15 +12,21 @@ module pcs_in_32b
     output xgmii32_t xgmii_rx
 );
 
-wire        blsync_32b_clk_w    ;
-wire        blsync_32b_rst_w    ;
-wire [31:0] blsync_32b_din_w    ;
-wire [31:0] blsync_32b_dout_w   ;
-wire [1:0]  blsync_32b_ctrl_w   ;
-wire        blsync_32b_dout_en_w;       
-wire        blsync_32b_even_w   ;       
-wire        blsync_32b_sync_w   ;
-wire        blsync_32b_sleep_w  ;
+wire        align_rx_32b_clk_w    ;
+wire        align_rx_32b_rst_w    ;
+wire [31:0] align_rx_32b_din_w    ;
+wire [31:0] align_rx_32b_dout_w   ;
+wire [1:0]  align_rx_32b_ctrl_w   ;
+wire        align_rx_32b_dout_en_w;       
+wire        align_rx_32b_even_w   ;       
+
+wire        blsync_rx_clk_w        ; 
+wire        blsync_rx_rst_w        ;
+wire [1:0]  blsync_rx_header_w     ;
+wire        blsync_rx_header_ena_w ;
+wire        blsync_rx_block_lock_w ;
+wire        blsync_rx_slp_w        ;
+
 /*
 wire        g10_descrambler_clk_w   ;   
 wire        g10_descrambler_rst_w   ;   
@@ -44,25 +50,39 @@ wire [ 3:0] g10_decoder_32b_ctrlout_w ;
 wire        g10_decoder_32b_dout_en_w ;
 */
 ////////////////////////////////////////////////////////////////////////////////
-assign blsync_rx_32b_clk_w  = clk      ; 
-assign blsync_rx_32b_rst_w  = rst      ;
-assign blsync_rx_32b_din_w  = pma_data ;
+assign align_rx_32b_clk_w  = clk      ; 
+assign align_rx_32b_rst_w  = rst      ;
+assign align_rx_32b_din_w  = pma_data ;
 
-blsync_rx_32b blsync_rx_32b_u
+align_rx_32b align_rx_32b_u
 (
-    .clk     (blsync_rx_32b_clk_w    ),
-    .rst     (blsync_rx_32b_rst_w    ),
-    .din     (blsync_rx_32b_din_w    ),
-    .dout    (blsync_rx_32b_dout_w   ),
-    .ctrl    (blsync_rx_32b_ctrl_w   ),
-    .dout_en (blsync_rx_32b_dout_en_w),
-    .even    (blsync_rx_32b_even_w   ),
-    .sync    (blsync_rx_32b_sync_w   ),
-    .sleep   (blsync_rx_32b_sleep_w  )
+    .clk     (align_rx_32b_clk_w    ),
+    .rst     (align_rx_32b_rst_w    ),
+    .din     (align_rx_32b_din_w    ),
+    .dout    (align_rx_32b_dout_w   ),
+    .ctrl    (align_rx_32b_ctrl_w   ),
+    .dout_en (align_rx_32b_dout_en_w),
+    .even    (align_rx_32b_even_w   )
 );
+////////////////////////////////////////////////////////////////////////////////
 
-assign pma_sync  = g10_blsync_32b_sync_w ;
-assign pma_sleep = g10_blsync_32b_sleep_w;
+////////////////////////////////////////////////////////////////////////////////
+assign blsync_rx_clk_w        = clk;
+assign blsync_rx_rst_w        = rst;
+assign blsync_rx_header_w     = align_rx_32b_ctrl_w;
+assign blsync_rx_header_ena_w = align_rx_32b_dout_en_w;
+
+blsync_rx blsync_rx_u
+(
+    .clk       (blsync_rx_clk_w       ),// input 
+    .rst       (blsync_rx_rst_w       ),// input 
+    .header    (blsync_rx_header_w    ),// input 
+    .header_ena(blsync_rx_header_ena_w),// input 
+    .block_lock(blsync_rx_block_lock_w),// output
+    .slp       (blsync_rx_slp_w       ) // output
+);
+assign pma_slip = blsync_rx_slp_w;
+assign pma_sync = blsync_rx_block_lock_w;
 ////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////
