@@ -28,39 +28,30 @@ always @(posedge clk) header_ena_valid_r   <= header_ena_valid_w  ;
 always @(posedge clk) header_ena_invalid_r <= header_ena_invalid_w;
 
 always @(posedge clk) begin
-    if (rst) begin sh_cnt_r <= 0; end
-    else begin 
-        if      (reset_cnt_w                              ) begin sh_cnt_r <= 0; end
-        else if (header_ena_valid_r | header_ena_invalid_r) begin sh_cnt_r <= sh_cnt_r + 1; end
-    end
+    if      (rst                                      ) begin sh_cnt_r <= 0; end
+    else if (reset_cnt_w                              ) begin sh_cnt_r <= 0; end
+    else if (header_ena_valid_r | header_ena_invalid_r) begin sh_cnt_r <= sh_cnt_r + 1; end
 end
 
 always @(posedge clk) begin
-    if (rst) begin sh_invalid_cnt_r <= 0; end
-    else begin 
-        if      (reset_cnt_w         ) begin sh_invalid_cnt_r <= 0; end
-        else if (header_ena_invalid_r) begin sh_invalid_cnt_r <= sh_invalid_cnt_r + 1;
-        end
-    end
+    if      (rst                 ) begin sh_invalid_cnt_r <= 0; end
+    else if (reset_cnt_w         ) begin sh_invalid_cnt_r <= 0; end
+    else if (header_ena_invalid_r) begin sh_invalid_cnt_r <= sh_invalid_cnt_r + 1; end
 end
 
 always @(posedge clk) begin
-    if (rst) begin block_lock_r <= 0; end
-    else begin
-        if      (good_64_w) begin block_lock_r <= 1; end
-        else if (sleep_w  ) begin block_lock_r <= 0; end
-    end
+    if      (rst      ) begin block_lock_r <= 0; end
+    else if (good_64_w) begin block_lock_r <= 1; end
+    else if (slip_w   ) begin block_lock_r <= 0; end
 end
 
 always @(posedge clk) begin
-    if (rst) begin slip_r <= 0; end
-    else begin
-        if (slip_w) begin slip_r <= 1; end
-        else        begin slip_r <= 0; end
-    end
+    if      (rst)    begin slip_r <= 0; end
+    else if (slip_w) begin slip_r <= 1; end
+    else             begin slip_r <= 0; end
 end
 
 assign slp = slip_r;
-assign block_lock - block_lock_r;
+assign block_lock = block_lock_r;
 
 endmodule
