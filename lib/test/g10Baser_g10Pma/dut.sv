@@ -56,8 +56,7 @@ reg         force_linkdown = 0;
 
 //////////////////////////////////////////////////////////////////////////
 reg baserTx_rst = 1; always @(posedge tr_baser_wrapper_xgmii_tx_clk_w) baserTx_rst <= !(tr_baser_wrapper_xgmii_tx_rdy_w); 
-//reg baserTx_rdy = 0; always @(posedge tr_baser_wrapper_xgmii_tx_clk_w) baserTx_rdy <=  (tr_baser_wrapper_xgmii_tx_rdy_w); 
-reg baserTx_rdy = 0; always @(posedge tr_baser_wrapper_xgmii_tx_clk_w) baserTx_rdy <=  (0); 
+reg baserTx_rdy = 0; always @(posedge tr_baser_wrapper_xgmii_tx_clk_w) baserTx_rdy <=  (tr_baser_wrapper_xgmii_tx_rdy_w & pcs_in_32b_pma_sync_w); 
 
 //reg nativeTx_rst = 1; always @(posedge g10_native_32b_wrapper_pma_tx_clk_w) nativeTx_rst <= !(g10_baser_rx_ready_w & g10_native_32b_wrapper_tx_rdy_w); 
 //reg nativeTx_rdy = 0; always @(posedge g10_native_32b_wrapper_pma_tx_clk_w) nativeTx_rdy <=  (g10_baser_rx_ready_w & g10_native_32b_wrapper_tx_rdy_w & g10_baser_rx_block_lock_w); 
@@ -75,12 +74,12 @@ assign baserRx.ena  = tr_baser_wrapper_xgmii_rx_w.ena ;
 //assign nativeTx.clk  = g10_native_32b_wrapper_pma_tx_clk_w;
 //assign nativeTx.rst  = nativeTx_rst;
 //assign nativeTx.rdy  = nativeTx_rdy;
-//
-//assign nativeRx.clk  = g10_native_32b_wrapper_pma_rx_clk_w;
-//assign nativeRx.rst  = !g10_native_32b_wrapper_rx_rdy_w;
-//assign nativeRx.data = g10_pcsin_32b_xgmii_rx_w.data;
-//assign nativeRx.ctrl = g10_pcsin_32b_xgmii_rx_w.ctrl;
-//assign nativeRx.ena  = g10_pcsin_32b_xgmii_rx_w.ena ;
+
+assign pmaRx.clk  = tr_pma_wrapper_pma_rx_clk_w;
+assign pmaRx.rst  = !tr_pma_wrapper_pma_rx_rdy_w;
+assign pmaRx.data = pcs_in_32b_xgmii_rx_w.data;
+assign pmaRx.ctrl = pcs_in_32b_xgmii_rx_w.ctrl;
+assign pmaRx.ena  = pcs_in_32b_xgmii_rx_w.ena ;
 //////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////

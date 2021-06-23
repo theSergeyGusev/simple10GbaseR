@@ -62,5 +62,28 @@ sim:/top/dut_u/pcs_in_32b_u/blsync_rx_u/rst \
 sim:/top/dut_u/pcs_in_32b_u/blsync_rx_u/block_lock \
 sim:/top/dut_u/pcs_in_32b_u/blsync_rx_u/slp
 
+add wave -divider #descrambler_rx_32b_u#
+add wave -position insertpoint  \
+sim:/top/dut_u/pcs_in_32b_u/descrambler_rx_32b_u/clk \
+sim:/top/dut_u/pcs_in_32b_u/descrambler_rx_32b_u/ctrlin \
+sim:/top/dut_u/pcs_in_32b_u/descrambler_rx_32b_u/din \
+sim:/top/dut_u/pcs_in_32b_u/descrambler_rx_32b_u/din_en \
+sim:/top/dut_u/pcs_in_32b_u/descrambler_rx_32b_u/evenin \
+sim:/top/dut_u/pcs_in_32b_u/descrambler_rx_32b_u/ctrlout \
+sim:/top/dut_u/pcs_in_32b_u/descrambler_rx_32b_u/dout \
+sim:/top/dut_u/pcs_in_32b_u/descrambler_rx_32b_u/dout_en \
+sim:/top/dut_u/pcs_in_32b_u/descrambler_rx_32b_u/evenout
+
+add wave -divider #decoder_rx_32b_u#
+add wave -position insertpoint  \
+sim:/top/dut_u/pcs_in_32b_u/decoder_rx_32b_u/clk \
+sim:/top/dut_u/pcs_in_32b_u/decoder_rx_32b_u/ctrlin \
+sim:/top/dut_u/pcs_in_32b_u/decoder_rx_32b_u/din \
+sim:/top/dut_u/pcs_in_32b_u/decoder_rx_32b_u/din_en \
+sim:/top/dut_u/pcs_in_32b_u/decoder_rx_32b_u/even \
+sim:/top/dut_u/pcs_in_32b_u/decoder_rx_32b_u/rst \
+sim:/top/dut_u/pcs_in_32b_u/decoder_rx_32b_u/ctrlout \
+sim:/top/dut_u/pcs_in_32b_u/decoder_rx_32b_u/dout \
+sim:/top/dut_u/pcs_in_32b_u/decoder_rx_32b_u/dout_en
 
 run -a

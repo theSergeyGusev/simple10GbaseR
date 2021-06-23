@@ -45,6 +45,8 @@ LIBSRC:= \
 	./tr_pma_wrapper/tr_pma_wrapper.sv \
 	./align_rx_32b/align_rx_32b.sv \
 	./blsync_rx/blsync_rx.sv \
+	./descrambler_rx_32b/descrambler_rx_32b.sv \
+	./decoder_rx_32b/decoder_rx_32b.sv \
 	./pcs_rx_32b/pcs_rx_32b.sv \
 
 TESTSRC:= \
