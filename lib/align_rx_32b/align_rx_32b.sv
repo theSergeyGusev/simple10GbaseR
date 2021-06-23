@@ -70,9 +70,9 @@ assign dout_w =(cnt_r== 1 | cnt_r== 2) ? ({din[ 1:0],din_r[31: 2]}) :
 
 assign even_w =!cnt_r[0];       
 
-assign dout = dout_w;
-assign even  = even_w;
-assign ctrl = ctrl_w;
+assign dout    = dout_w;
+assign even    = even_w;
+assign ctrl    = ctrl_r;
 assign dout_en = dout_en_r;
 
 endmodule
