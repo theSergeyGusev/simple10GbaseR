@@ -95,8 +95,8 @@ function void Environment::build();
     drvBaser2genBaser = new[1];
     drvPma2genPma     = new[1];
     scb = new[2];
-    scb[0] = new(cfg,"0");
-    scb[1] = new(cfg,"1");
+    scb[0] = new(cfg,"baser2pma");
+    scb[1] = new(cfg,"pma2baser");
 
     genBaser2drvBaser[0] = new();
     genPma2drvPma    [0] = new();
@@ -115,8 +115,8 @@ function void Environment::build();
     begin
         Scb_Driver_cbs   #(.XGMII_WIDTH(XGMII_WIDTH_BASER)) sdcBaser  = new(scb[0]);
         Scb_Driver_cbs   #(.XGMII_WIDTH(XGMII_WIDTH_PMA  )) sdcPma    = new(scb[1]);
-        Scb_Monitor_cbs  #(.XGMII_WIDTH(XGMII_WIDTH_BASER)) smcBaser  = new(scb[0]);
-        Scb_Monitor_cbs  #(.XGMII_WIDTH(XGMII_WIDTH_PMA  )) smcPma    = new(scb[1]);
+        Scb_Monitor_cbs  #(.XGMII_WIDTH(XGMII_WIDTH_BASER)) smcBaser  = new(scb[1]);
+        Scb_Monitor_cbs  #(.XGMII_WIDTH(XGMII_WIDTH_PMA  )) smcPma    = new(scb[0]);
         foreach (drvBaser[i] ) drvBaser[i].cbsq.push_back(sdcBaser)  ;  // Add scb to every driver
         foreach (drvPma  [i] ) drvPma[i].cbsq.push_back(sdcPma);  // Add scb to every driver
         foreach (monBaser[i] ) monBaser[i].cbsq.push_back(smcBaser)  ;  // Add scb to every monitor

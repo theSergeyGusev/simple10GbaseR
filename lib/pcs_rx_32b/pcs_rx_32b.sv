@@ -1,6 +1,6 @@
 import gtype::xgmii32_t;
 
-module pcs_in_32b
+module pcs_rx_32b
 (
     input wire clk,
     input wire rst,
