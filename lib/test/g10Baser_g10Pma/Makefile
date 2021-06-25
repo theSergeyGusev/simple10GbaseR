@@ -48,6 +48,10 @@ LIBSRC:= \
 	./descrambler_rx_32b/descrambler_rx_32b.sv \
 	./decoder_rx_32b/decoder_rx_32b.sv \
 	./pcs_rx_32b/pcs_rx_32b.sv \
+	./encoder_tx_32b/encoder_tx_32b.sv \
+	./scrambler_tx_32b/scrambler_tx_32b.sv \
+	./gearbox_tx_32b/gearbox_tx_32b.sv \
+	./pcs_tx_32b/pcs_tx_32b.sv \
 
 TESTSRC:= \
 	./../vsim_common/test_type.sv \

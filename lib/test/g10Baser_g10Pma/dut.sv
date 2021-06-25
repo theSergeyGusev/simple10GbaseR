@@ -45,21 +45,26 @@ wire [31:0] tr_pma_wrapper_pma_rx_w    ;
 wire        tr_pma_wrapper_pma_rx_rdy_w; 
 wire        tr_pma_wrapper_pma_rx_clk_w; 
 
-wire        pcs_in_32b_clk_w     ;
-wire        pcs_in_32b_rst_w     ;
-wire [31:0] pcs_in_32b_pma_data_w;
-wire        pcs_in_32b_pma_slip_w;
-wire        pcs_in_32b_pma_sync_w;
-xgmii32_t   pcs_in_32b_xgmii_rx_w;
+wire        pcs_rx_32b_clk_w     ;
+wire        pcs_rx_32b_rst_w     ;
+wire [31:0] pcs_rx_32b_pma_data_w;
+wire        pcs_rx_32b_pma_slip_w;
+wire        pcs_rx_32b_pma_sync_w;
+xgmii32_t   pcs_rx_32b_xgmii_rx_w;
+
+wire        pcs_tx_32b_clk_w     ;
+wire        pcs_tx_32b_rst_w     ;
+xgmii32_t   pcs_tx_32b_xgmii_tx_w;
+wire [31:0] pcs_tx_32b_pma_data_w;
 
 reg         force_linkdown = 0;
 
 //////////////////////////////////////////////////////////////////////////
 reg baserTx_rst = 1; always @(posedge tr_baser_wrapper_xgmii_tx_clk_w) baserTx_rst <= !(tr_baser_wrapper_xgmii_tx_rdy_w); 
-reg baserTx_rdy = 0; always @(posedge tr_baser_wrapper_xgmii_tx_clk_w) baserTx_rdy <=  (tr_baser_wrapper_xgmii_tx_rdy_w & pcs_in_32b_pma_sync_w); 
+reg baserTx_rdy = 0; always @(posedge tr_baser_wrapper_xgmii_tx_clk_w) baserTx_rdy <=  (tr_baser_wrapper_xgmii_tx_rdy_w & pcs_rx_32b_pma_sync_w); 
 
-//reg nativeTx_rst = 1; always @(posedge g10_native_32b_wrapper_pma_tx_clk_w) nativeTx_rst <= !(g10_baser_rx_ready_w & g10_native_32b_wrapper_tx_rdy_w); 
-//reg nativeTx_rdy = 0; always @(posedge g10_native_32b_wrapper_pma_tx_clk_w) nativeTx_rdy <=  (g10_baser_rx_ready_w & g10_native_32b_wrapper_tx_rdy_w & g10_baser_rx_block_lock_w); 
+reg pmaTx_rst = 1; always @(posedge tr_pma_wrapper_pma_tx_clk_w) pmaTx_rst <= !(tr_pma_wrapper_pma_tx_rdy_w); 
+reg pmaTx_rdy = 0; always @(posedge tr_pma_wrapper_pma_tx_clk_w) pmaTx_rdy <=  (tr_pma_wrapper_pma_tx_rdy_w & tr_baser_wrapper_rx_sync_w); 
 
 assign baserTx.clk = tr_baser_wrapper_xgmii_tx_clk_w;
 assign baserTx.rst = baserTx_rst;
@@ -71,15 +76,15 @@ assign baserRx.data = tr_baser_wrapper_xgmii_rx_w.data;
 assign baserRx.ctrl = tr_baser_wrapper_xgmii_rx_w.ctrl;
 assign baserRx.ena  = tr_baser_wrapper_xgmii_rx_w.ena ;
 
-//assign nativeTx.clk  = g10_native_32b_wrapper_pma_tx_clk_w;
-//assign nativeTx.rst  = nativeTx_rst;
-//assign nativeTx.rdy  = nativeTx_rdy;
+assign pmaTx.clk  = tr_pma_wrapper_pma_tx_clk_w;
+assign pmaTx.rst  = pmaTx_rst;
+assign pmaTx.rdy  = pmaTx_rdy;
 
 assign pmaRx.clk  = tr_pma_wrapper_pma_rx_clk_w;
 assign pmaRx.rst  = !tr_pma_wrapper_pma_rx_rdy_w;
-assign pmaRx.data = pcs_in_32b_xgmii_rx_w.data;
-assign pmaRx.ctrl = pcs_in_32b_xgmii_rx_w.ctrl;
-assign pmaRx.ena  = pcs_in_32b_xgmii_rx_w.ena ;
+assign pmaRx.data = pcs_rx_32b_xgmii_rx_w.data;
+assign pmaRx.ctrl = pcs_rx_32b_xgmii_rx_w.ctrl;
+assign pmaRx.ena  = pcs_rx_32b_xgmii_rx_w.ena ;
 //////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////
@@ -117,8 +122,8 @@ assign tr_pma_wrapper_clk_glbl_w   = clk_glbl;
 assign tr_pma_wrapper_rst_glbl_w   = rst_glbl;
 assign tr_pma_wrapper_refclk_w     = clk_ref;
 assign tr_pma_wrapper_rx_serial_w  = tr_baser_wrapper_tx_serial_w;
-assign tr_pma_wrapper_pma_tx_w     = 0;
-assign tr_pma_wrapper_pma_slip_w   = pcs_in_32b_pma_slip_w;
+assign tr_pma_wrapper_pma_tx_w     = pcs_tx_32b_pma_data_w;
+assign tr_pma_wrapper_pma_slip_w   = pcs_rx_32b_pma_slip_w;
 
 tr_pma_wrapper tr_pma_wrapper_u
 (
@@ -138,18 +143,32 @@ tr_pma_wrapper tr_pma_wrapper_u
 //////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////
-assign pcs_in_32b_clk_w      = tr_pma_wrapper_pma_rx_clk_w; 
-assign pcs_in_32b_rst_w      = 0;
-assign pcs_in_32b_pma_data_w = tr_pma_wrapper_pma_rx_w;
+assign pcs_rx_32b_clk_w      = tr_pma_wrapper_pma_rx_clk_w; 
+assign pcs_rx_32b_rst_w      = 0;
+assign pcs_rx_32b_pma_data_w = tr_pma_wrapper_pma_rx_w;
 
-pcs_in_32b pcs_in_32b_u
+pcs_rx_32b pcs_rx_32b_u
 (
-    .clk      (pcs_in_32b_clk_w     ),//input  
-    .rst      (pcs_in_32b_rst_w     ),//input 
-    .pma_data (pcs_in_32b_pma_data_w),//input 
-    .pma_slip (pcs_in_32b_pma_slip_w),//output
-    .pma_sync (pcs_in_32b_pma_sync_w),//output
-    .xgmii_rx (pcs_in_32b_xgmii_rx_w) //output
+    .clk      (pcs_rx_32b_clk_w     ),//input  
+    .rst      (pcs_rx_32b_rst_w     ),//input 
+    .pma_data (pcs_rx_32b_pma_data_w),//input 
+    .pma_slip (pcs_rx_32b_pma_slip_w),//output
+    .pma_sync (pcs_rx_32b_pma_sync_w),//output
+    .xgmii_rx (pcs_rx_32b_xgmii_rx_w) //output
+);
+//////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
+assign pcs_tx_32b_clk_w      = tr_pma_wrapper_pma_tx_clk_w;
+assign pcs_tx_32b_rst_w      = 0;
+assign pcs_tx_32b_xgmii_tx_w = {pmaTx.ena,pmaTx.ctrl,pmaTx.data};
+
+pcs_tx_32b pcs_tx_32b_u
+(
+    .clk      (pcs_tx_32b_clk_w     ),//input  
+    .rst      (pcs_tx_32b_rst_w     ),//input 
+    .xgmii_tx (pcs_tx_32b_xgmii_tx_w),//input 
+    .pma_data (pcs_tx_32b_pma_data_w) //output
 );
 //////////////////////////////////////////////////////////////////////////
 
