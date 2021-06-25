@@ -62,7 +62,7 @@ task Monitor4xgmii::receive(output Ethpack pack);
             if (Rx.tbrx_cb.ctrl[i]==1 & Rx.tbrx_cb.ena==1 & start==1 & Rx.tbrx_cb.data[i*8+:8]==8'hFD) begin stop=1; end
             if (Rx.tbrx_cb.ctrl[i]==0 & Rx.tbrx_cb.ena==1) begin
                 if (start==0 & ((i==1)|(i==5)) & (prev_byte==8'hFB)) begin data.push_back(prev_byte); start=1; end
-                data.push_back(Rx.tbrx_cb.data[i*8+:8]);
+                if (start==1                                       ) begin data.push_back(Rx.tbrx_cb.data[i*8+:8]);end
             end
             if (Rx.tbrx_cb.ena==1) begin prev_byte = Rx.tbrx_cb.data[i*8+:8]; end
         end 
