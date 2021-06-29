@@ -63,7 +63,8 @@ class Environment #(parameter XGMII_WIDTH_BASER = 64, parameter XGMII_WIDTH_PMA 
                         input virtual xgmii_if#(XGMII_WIDTH_PMA  ).TbRx pmaRx);
     extern virtual function void build();
     extern virtual task run();
-    extern virtual task force_linkdown();
+    extern virtual task force_linkdown_baser();
+    extern virtual task force_linkdown_pma();
     extern virtual function void wrap_up();
 
 endclass
@@ -123,11 +124,6 @@ function void Environment::build();
         foreach (monPma  [i] ) monPma[i].cbsq.push_back(smcPma);  // Add scb to every monitor
     end
 
-    //if (cfg.test_force_linkdown==0) begin
-    //    //for speedup test
-    //    top.dut_u.g10_pcsin_32b_u.g10_blsync_32b_u.cnt_r = 27; 
-    //end
-
 endfunction
 
 task Environment::run();
@@ -160,7 +156,13 @@ task Environment::run();
 
     if (cfg.test_force_linkdown==1) begin
         fork begin
-            this.force_linkdown();
+            this.force_linkdown_baser();
+        end
+        join_none
+    end
+    if (cfg.test_force_linkdown==1) begin
+        fork begin
+            this.force_linkdown_pma();
         end
         join_none
     end
@@ -195,17 +197,31 @@ task Environment::run();
 
 endtask : run
 
-task Environment::force_linkdown();
+task Environment::force_linkdown_baser();
+    int pause;
+    int linkdown;
+    forever begin
+        @drvPma2genPma[0];
+        pause = $urandom_range(500,600);
+        linkdown = $urandom_range(200,300);
+        repeat (pause) @baserTx.tbtx_cb;
+        top.dut_u.force_linkdown_baser = 1;
+        repeat (linkdown) @baserTx.tbtx_cb;
+        top.dut_u.force_linkdown_baser = 0;
+    end 
+endtask
+
+task Environment::force_linkdown_pma();
     int pause;
     int linkdown;
     forever begin
         @drvBaser2genBaser[0];
-        pause = $urandom_range(500,1000);
+        pause = $urandom_range(500,600);
         linkdown = $urandom_range(200,300);
-        repeat (pause) @baserTx.tbtx_cb;
-        top.dut_u.force_linkdown = 1;
-        repeat (linkdown) @baserTx.tbtx_cb;
-        top.dut_u.force_linkdown = 0;
+        repeat (pause) @pmaTx.tbtx_cb;
+        top.dut_u.force_linkdown_pma = 1;
+        repeat (linkdown) @pmaTx.tbtx_cb;
+        top.dut_u.force_linkdown_pma = 0;
     end 
 endtask
 

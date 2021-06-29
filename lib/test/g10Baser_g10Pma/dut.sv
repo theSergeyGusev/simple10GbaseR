@@ -57,7 +57,8 @@ wire        pcs_tx_32b_rst_w     ;
 xgmii32_t   pcs_tx_32b_xgmii_tx_w;
 wire [31:0] pcs_tx_32b_pma_data_w;
 
-reg         force_linkdown = 0;
+reg         force_linkdown_baser = 0;
+reg         force_linkdown_pma   = 0;
 
 //////////////////////////////////////////////////////////////////////////
 reg baserTx_rst = 1; always @(posedge tr_baser_wrapper_xgmii_tx_clk_w) baserTx_rst <= !(tr_baser_wrapper_xgmii_tx_rdy_w); 
@@ -93,7 +94,7 @@ assign tr_baser_wrapper_rst_glbl_w  = rst_glbl;
 assign tr_baser_wrapper_clk_156_w   = clk_156;    
 assign tr_baser_wrapper_rst_156_w   = rst_156;   
 assign tr_baser_wrapper_refclk_w    = clk_ref;   
-assign tr_baser_wrapper_rx_serial_w = tr_pma_wrapper_tx_serial_w;   
+assign tr_baser_wrapper_rx_serial_w = tr_pma_wrapper_tx_serial_w | force_linkdown_baser;   
 assign tr_baser_wrapper_xgmii_tx_w  = {baserTx.ena,baserTx.ctrl,baserTx.data};   
 
 tr_baser_wrapper tr_baser_wrapper_u
@@ -121,7 +122,7 @@ tr_baser_wrapper tr_baser_wrapper_u
 assign tr_pma_wrapper_clk_glbl_w   = clk_glbl;
 assign tr_pma_wrapper_rst_glbl_w   = rst_glbl;
 assign tr_pma_wrapper_refclk_w     = clk_ref;
-assign tr_pma_wrapper_rx_serial_w  = tr_baser_wrapper_tx_serial_w;
+assign tr_pma_wrapper_rx_serial_w  = tr_baser_wrapper_tx_serial_w | force_linkdown_pma;
 assign tr_pma_wrapper_pma_tx_w     = pcs_tx_32b_pma_data_w;
 assign tr_pma_wrapper_pma_slip_w   = pcs_rx_32b_pma_slip_w;
 

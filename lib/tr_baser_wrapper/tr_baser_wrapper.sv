@@ -64,6 +64,7 @@ wire [7:0]  tr_10g_baser_rx_control_w              ;
 wire [63:0] tr_10g_baser_unused_rx_parallel_data_w ;
 wire [11:0] tr_10g_baser_unused_rx_control_w       ;
 wire [0:0]  tr_10g_baser_tx_enh_data_valid_w       ;
+wire [0:0]  tr_10g_baser_tx_enh_fifo_full_w        ;   
 wire [0:0]  tr_10g_baser_rx_enh_blk_lock_w         ;
 
 wire  tr_fpll_pll_refclk0_w    ;
@@ -149,6 +150,7 @@ tr_10g_baser tr_10g_baser_u
     .unused_rx_parallel_data  (tr_10g_baser_unused_rx_parallel_data_w ) , // output 
     .unused_rx_control        (tr_10g_baser_unused_rx_control_w       ) , // output 
     .tx_enh_data_valid        (tr_10g_baser_tx_enh_data_valid_w       ) , // input  
+	.tx_enh_fifo_full         (tr_10g_baser_tx_enh_fifo_full_w        ) , // output
     .rx_enh_blk_lock          (tr_10g_baser_rx_enh_blk_lock_w         )   // output 
 );
 

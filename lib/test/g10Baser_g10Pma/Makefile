@@ -126,8 +126,8 @@ compile_tr_10g_baser:
 	vlog -sv $(IPDIR)/tr_10g_baser/altera_xcvr_native_a10_191/sim/pcie_mgmt_cpu.sv                                    -work tr_10g_baser 
 	vlog -sv $(IPDIR)/tr_10g_baser/altera_xcvr_native_a10_191/sim/pcie_mgmt_master.sv                                 -work tr_10g_baser 
 	vlog -sv $(IPDIR)/tr_10g_baser/altera_xcvr_native_a10_191/sim/altera_xcvr_native_pcie_dfe_ip.sv                   -work tr_10g_baser 
-	vlog -sv $(IPDIR)/tr_10g_baser/altera_xcvr_native_a10_191/sim/alt_xcvr_native_rcfg_opt_logic_vug4pii.sv           -work tr_10g_baser
-	vlog -sv $(IPDIR)/tr_10g_baser/altera_xcvr_native_a10_191/sim/tr_10g_baser_altera_xcvr_native_a10_191_vug4pii.sv  -work tr_10g_baser
+	vlog -sv $(IPDIR)/tr_10g_baser/altera_xcvr_native_a10_191/sim/alt_xcvr_native_rcfg_opt_logic_zicn6ny.sv           -work tr_10g_baser
+	vlog -sv $(IPDIR)/tr_10g_baser/altera_xcvr_native_a10_191/sim/tr_10g_baser_altera_xcvr_native_a10_191_zicn6ny.sv  -work tr_10g_baser
 	vlog     $(IPDIR)/tr_10g_baser/sim/tr_10g_baser.v                                                                 -work tr_10g_baser 
 
 compile_tr_10g_pma:

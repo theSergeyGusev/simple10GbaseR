@@ -3,6 +3,8 @@ add wave -position end sim:/top/dut_u/clk_ref
 add wave -position end sim:/top/dut_u/rst_ref
 add wave -position end sim:/top/dut_u/clk_glbl
 add wave -position end sim:/top/dut_u/rst_glbl
+add wave -position end sim:/top/dut_u/force_linkdown_baser
+add wave -position end sim:/top/dut_u/force_linkdown_pma  
 
 add wave -divider #tr_baser_wrapper_u#
 add wave -position insertpoint  \
@@ -18,6 +20,37 @@ sim:/top/dut_u/tr_baser_wrapper_u/xgmii_rx_clk \
 sim:/top/dut_u/tr_baser_wrapper_u/xgmii_rx_rdy \
 sim:/top/dut_u/tr_baser_wrapper_u/xgmii_tx_clk \
 sim:/top/dut_u/tr_baser_wrapper_u/xgmii_tx_rdy
+
+add wave -divider #tr_10g_baser_u#
+add wave -position insertpoint  \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/tx_analogreset \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/tx_digitalreset \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/rx_analogreset \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/rx_digitalreset \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/tx_cal_busy \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/rx_cal_busy \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/tx_serial_clk0 \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/rx_cdr_refclk0 \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/tx_serial_data \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/rx_serial_data \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/rx_is_lockedtoref \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/rx_is_lockedtodata \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/tx_coreclkin \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/rx_coreclkin \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/tx_clkout \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/rx_clkout \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/tx_parallel_data \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/tx_control \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/tx_err_ins \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/unused_tx_parallel_data \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/unused_tx_control \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/rx_parallel_data \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/rx_control \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/unused_rx_parallel_data \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/unused_rx_control \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/tx_enh_data_valid \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/tx_enh_fifo_full \
+sim:/top/dut_u/tr_baser_wrapper_u/tr_10g_baser_u/rx_enh_blk_lock
 
 add wave -divider #tr_pma_wrapper_u#
 add wave -position insertpoint  \
