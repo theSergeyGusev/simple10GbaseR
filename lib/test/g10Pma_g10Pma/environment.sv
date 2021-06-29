@@ -147,6 +147,7 @@ task Environment::force_linkdown_pma();
     int pause;
     int linkdown;
     forever begin
+        @drvPma2genPma[0];
         pause = $urandom_range(500,600);
         linkdown = $urandom_range(200,300);
         repeat (pause) @pmaTx.tbtx_cb;
