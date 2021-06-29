@@ -183,7 +183,7 @@ task Environment::run();
 
     // Wait for all generators to finish, or time-out
     fork : timeout_block
-        wait ((num_genBaser_running == 0) & (num_genBaser_running == 0));
+        wait ((num_genBaser_running == 0) & (num_genPma_running == 0));
         begin
             repeat (1000000) @baserTx.tbtx_cb;
             $display("@%0t: %m Env: ERROR: Timeout while waiting for generators to finish", $time);
