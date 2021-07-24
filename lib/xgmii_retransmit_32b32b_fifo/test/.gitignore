@@ -1,0 +1,6 @@
+work/
+transcript
+fifo_xgmii_retransmit_32b32b
+*.vstf
+*.wlf
+wlf*
