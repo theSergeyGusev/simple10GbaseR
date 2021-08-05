@@ -10,6 +10,11 @@ module tr_baser_wrapper
     input  wire rx_serial,
     output wire tx_serial,
 
+    output wire tr_fpll_pll_powerdown  ,
+    input  wire tr_fpll_pll_locked     ,
+    input  wire tr_fpll_tx_serial_clk  ,
+    input  wire tr_fpll_pll_cal_busy   ,
+
     input  xgmii64_t xgmii_tx,
     output wire      xgmii_tx_rdy,
     output wire      xgmii_tx_clk,
@@ -67,19 +72,13 @@ wire [0:0]  tr_10g_baser_tx_enh_data_valid_w       ;
 wire [0:0]  tr_10g_baser_tx_enh_fifo_full_w        ;   
 wire [0:0]  tr_10g_baser_rx_enh_blk_lock_w         ;
 
-wire  tr_fpll_pll_refclk0_w    ;
-wire  tr_fpll_pll_powerdown_w  ;
-wire  tr_fpll_pll_locked_w     ;
-wire  tr_fpll_tx_serial_clk_w  ;
-wire  tr_fpll_pll_cal_busy_w   ; 
-
 ////////////////////////////////////////////////////////////////////////////////
 assign tr_rst_clock_w               = clk_glbl                          ;
 assign tr_rst_reset_w               = rst_glbl                          ;
-assign tr_rst_pll_locked0_w         = tr_fpll_pll_locked_w              ;
+assign tr_rst_pll_locked0_w         = tr_fpll_pll_locked                ;
 assign tr_rst_pll_select0_w         = 0                                 ;
 assign tr_rst_tx_cal_busy0_w        = tr_10g_baser_tx_cal_busy_w        ;
-assign tr_rst_pll_cal_busy0_w       = tr_fpll_pll_cal_busy_w            ;
+assign tr_rst_pll_cal_busy0_w       = tr_fpll_pll_cal_busy              ;
 assign tr_rst_rx_is_lockedtodata0_w = tr_10g_baser_rx_is_lockedtodata_w ;
 assign tr_rst_rx_cal_busy0_w        = tr_10g_baser_rx_cal_busy_w        ;
 
@@ -110,7 +109,7 @@ assign tr_10g_baser_tx_analogreset_w          = tr_rst_tx_analogreset0_w  ;
 assign tr_10g_baser_tx_digitalreset_w         = tr_rst_tx_digitalreset0_w ;
 assign tr_10g_baser_rx_analogreset_w          = tr_rst_rx_analogreset0_w  ;
 assign tr_10g_baser_rx_digitalreset_w         = tr_rst_rx_digitalreset0_w ;
-assign tr_10g_baser_tx_serial_clk0_w          = tr_fpll_tx_serial_clk_w;
+assign tr_10g_baser_tx_serial_clk0_w          = tr_fpll_tx_serial_clk     ;
 assign tr_10g_baser_rx_cdr_refclk0_w          = refclk;
 assign tr_10g_baser_rx_serial_data_w          = rx_serial;
 assign tr_10g_baser_tx_coreclkin_w            = clk_156;
@@ -165,19 +164,6 @@ assign xgmii_rx_rst  = rst_156;
 assign xgmii_tx_rst  = rst_156;
 ////////////////////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////////////////////
-assign tr_fpll_pll_refclk0_w   = refclk;
-assign tr_fpll_pll_powerdown_w = tr_rst_pll_powerdown0_w;
-
-tr_fpll tr_fpll_u
-(
-    .pll_refclk0   (tr_fpll_pll_refclk0_w  ), // input  
-    .pll_powerdown (tr_fpll_pll_powerdown_w), // input  
-    .pll_locked    (tr_fpll_pll_locked_w   ), // output 
-    .tx_serial_clk (tr_fpll_tx_serial_clk_w), // output 
-    .pll_cal_busy  (tr_fpll_pll_cal_busy_w )  // output 
-    );
-////////////////////////////////////////////////////////////////////////////////
-
+assign tr_fpll_pll_powerdown = tr_rst_pll_powerdown0_w;
 
 endmodule

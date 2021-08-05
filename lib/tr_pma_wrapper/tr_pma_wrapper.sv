@@ -60,12 +60,6 @@ wire [31:0] tr_10g_pma_rx_parallel_data_w        ;
 wire [95:0] tr_10g_pma_unused_rx_parallel_data_w ; 
 wire [0:0]  tr_10g_pma_tx_enh_data_valid_w       ; 
 
-wire  pll_644_156_pll_refclk0_w   ;
-wire  pll_644_156_pll_powerdown_w ;
-wire  pll_644_156_pll_locked_w    ;
-wire  pll_644_156_outclk0_w       ;
-wire  pll_644_156_pll_cal_busy_w  ;
-
 ////////////////////////////////////////////////////////////////////////////////
 assign tr_rst_clock_w               = clk_glbl                          ;
 assign tr_rst_reset_w               = rst_glbl                          ;
