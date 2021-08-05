@@ -6,6 +6,11 @@ module tr_pma_wrapper
     input  wire rx_serial,
     output wire tx_serial,
 
+    output wire tr_fpll_pll_powerdown  ,
+    input  wire tr_fpll_pll_locked     ,
+    input  wire tr_fpll_tx_serial_clk  ,
+    input  wire tr_fpll_pll_cal_busy   ,
+
     input  wire [31:0] pma_tx,
     output wire        pma_tx_rdy,
     output wire        pma_tx_clk,
@@ -55,12 +60,6 @@ wire [31:0] tr_10g_pma_rx_parallel_data_w        ;
 wire [95:0] tr_10g_pma_unused_rx_parallel_data_w ; 
 wire [0:0]  tr_10g_pma_tx_enh_data_valid_w       ; 
 
-wire  tr_fpll_pll_refclk0_w    ;
-wire  tr_fpll_pll_powerdown_w  ;
-wire  tr_fpll_pll_locked_w     ;
-wire  tr_fpll_tx_serial_clk_w  ;
-wire  tr_fpll_pll_cal_busy_w   ; 
-
 wire  pll_644_156_pll_refclk0_w   ;
 wire  pll_644_156_pll_powerdown_w ;
 wire  pll_644_156_pll_locked_w    ;
@@ -70,10 +69,10 @@ wire  pll_644_156_pll_cal_busy_w  ;
 ////////////////////////////////////////////////////////////////////////////////
 assign tr_rst_clock_w               = clk_glbl                          ;
 assign tr_rst_reset_w               = rst_glbl                          ;
-assign tr_rst_pll_locked0_w         = tr_fpll_pll_locked_w              ;
+assign tr_rst_pll_locked0_w         = tr_fpll_pll_locked                ;
 assign tr_rst_pll_select0_w         = 0                                 ;
 assign tr_rst_tx_cal_busy0_w        = tr_10g_pma_tx_cal_busy_w          ;
-assign tr_rst_pll_cal_busy0_w       = tr_fpll_pll_cal_busy_w            ;
+assign tr_rst_pll_cal_busy0_w       = tr_fpll_pll_cal_busy              ;
 assign tr_rst_rx_is_lockedtodata0_w = tr_10g_pma_rx_is_lockedtodata_w   ;
 assign tr_rst_rx_cal_busy0_w        = tr_10g_pma_rx_cal_busy_w          ;
 
@@ -104,7 +103,7 @@ assign tr_10g_pma_tx_analogreset_w          = tr_rst_tx_analogreset0_w  ;
 assign tr_10g_pma_tx_digitalreset_w         = tr_rst_tx_digitalreset0_w ;
 assign tr_10g_pma_rx_analogreset_w          = tr_rst_rx_analogreset0_w  ;
 assign tr_10g_pma_rx_digitalreset_w         = tr_rst_rx_digitalreset0_w ;
-assign tr_10g_pma_tx_serial_clk0_w          = tr_fpll_tx_serial_clk_w   ;
+assign tr_10g_pma_tx_serial_clk0_w          = tr_fpll_tx_serial_clk     ;
 assign tr_10g_pma_rx_cdr_refclk0_w          = refclk                    ;
 assign tr_10g_pma_rx_serial_data_w          = rx_serial                 ;
 assign tr_10g_pma_rx_pma_clkslip_w          = pma_slip                  ;
@@ -145,19 +144,7 @@ assign pma_rx      = tr_10g_pma_rx_parallel_data_w;
 assign pma_rx_clk  = tr_10g_pma_rx_clkout_w;
 assign pma_tx_clk  = tr_10g_pma_tx_clkout_w;
 ////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////////
-assign tr_fpll_pll_refclk0_w   = refclk;
-assign tr_fpll_pll_powerdown_w = tr_rst_pll_powerdown0_w;
-
-tr_fpll tr_fpll_u
-(
-    .pll_refclk0   (tr_fpll_pll_refclk0_w  ), // input  
-    .pll_powerdown (tr_fpll_pll_powerdown_w), // input  
-    .pll_locked    (tr_fpll_pll_locked_w   ), // output 
-    .tx_serial_clk (tr_fpll_tx_serial_clk_w), // output 
-    .pll_cal_busy  (tr_fpll_pll_cal_busy_w )  // output 
-    );
-////////////////////////////////////////////////////////////////////////////////
+    
+assign tr_fpll_pll_powerdown = tr_rst_pll_powerdown0_w;
 
 endmodule
