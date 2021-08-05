@@ -64,7 +64,7 @@ clean:
 	rm -rf ./log/*.log
 	rm -rf ./log/*.vsim
 
-VSIM_L:= -L work -L fifo_xgmii_retransmit_32b32b -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L stratixv_ver -L stratixv_hssi_ver -L stratixv_pcie_hip_ver
+VSIM_L:= -L work -L fifo_xgmii_retransmit_32b32b -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver 
 
 run: $(TEST_LIST)
 test_r100_lin_b64_b64      : ; @./prerun.sh test_r100_lin_b64_b64     ; vsim $(VSIM_L) -logfile ./log/test_r100_lin_b64_b64.log     $(OPT) $(GUI_ENABLE) -nostdout top -sv_seed $(SEED) $(USR_OPTS) +test_force_linkdown=0 +generator_rate=100 +generator_count_packets=200 +generator_len_packet_type="lin" +generator_len_packet_start=64   +generator_len_packet_finish=64   -do $(DO) > ./log/test_r100_lin_b64_b64.vsim          ; ./postrun.sh test_r100_lin_b64_b64 
@@ -89,7 +89,7 @@ compile_fifo_xgmii_retransmit_32b32b:
 	rm -rf fifo_xgmii_retransmit_32b32b 
 	vlib fifo_xgmii_retransmit_32b32b 
 	
-	vlog $(IPDIR)/fifo_xgmii_retransmit_32b32b/fifo_191/sim/fifo_xgmii_retransmit_32b32b_fifo_191_rx5n6ai.v -work fifo_xgmii_retransmit_32b32b 
+	vlog $(IPDIR)/fifo_xgmii_retransmit_32b32b/fifo_191/sim/fifo_xgmii_retransmit_32b32b_fifo_191_cz3yy4i.v -work fifo_xgmii_retransmit_32b32b 
 	vlog $(IPDIR)/fifo_xgmii_retransmit_32b32b/sim/fifo_xgmii_retransmit_32b32b.v                           -work fifo_xgmii_retransmit_32b32b 
 
 compile: compile_fifo_xgmii_retransmit_32b32b compile_work
