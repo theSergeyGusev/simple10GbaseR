@@ -1,0 +1,15 @@
+work/
+transcript
+pll_644_156/
+tr_10g_baser/
+tr_10g_pma/
+tr_fpll/
+tr_rst/
+fifo_xgmii_retransmit_32b32b/
+*.vstf
+*.wlf
+wlf*
+
+
+
+
