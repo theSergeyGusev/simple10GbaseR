@@ -51,10 +51,12 @@ wire      xgmii_retransmit_32b32b_fifo_0to0_clk_rx_w;
 xgmii32_t xgmii_retransmit_32b32b_fifo_0to0_rx_w;    
 wire      xgmii_retransmit_32b32b_fifo_0to0_clk_tx_w;
 xgmii32_t xgmii_retransmit_32b32b_fifo_0to0_tx_w;    
+xgmii32_t xgmii_retransmit_32b32b_fifo_0to0_tx_r;    
 wire      xgmii_retransmit_32b32b_fifo_0to1_clk_rx_w;
 xgmii32_t xgmii_retransmit_32b32b_fifo_0to1_rx_w;    
 wire      xgmii_retransmit_32b32b_fifo_0to1_clk_tx_w;
 xgmii32_t xgmii_retransmit_32b32b_fifo_0to1_tx_w;    
+xgmii32_t xgmii_retransmit_32b32b_fifo_0to1_tx_r;    
 
 wire clk_glbl_w;
 wire rst_glbl_w;
@@ -138,7 +140,7 @@ end
 for (i=0;i<NUM_TR;i=i+1) begin : PCSTX
     assign pcs_tx_32b_clk_w      [i]= xgmii_tx_clk_w[i];
     assign pcs_tx_32b_rst_w      [i]= 0;
-    assign pcs_tx_32b_xgmii_tx_w [i]= (i==0) ? xgmii_retransmit_32b32b_fifo_0to0_tx_w : xgmii_retransmit_32b32b_fifo_0to1_tx_w;
+    assign pcs_tx_32b_xgmii_tx_w [i]= (i==0) ? xgmii_retransmit_32b32b_fifo_0to0_tx_r : xgmii_retransmit_32b32b_fifo_0to1_tx_r;
 
     pcs_tx_32b pcs_tx_32b_u
     (
@@ -162,6 +164,7 @@ xgmii_retransmit_32b32b_fifo xgmii_retransmit_32b32b_fifo_0to0_u
     .clk_tx (xgmii_retransmit_32b32b_fifo_0to0_clk_tx_w),
     .tx     (xgmii_retransmit_32b32b_fifo_0to0_tx_w    )
 );
+always @(posedge xgmii_retransmit_32b32b_fifo_0to0_clk_tx_w) xgmii_retransmit_32b32b_fifo_0to0_tx_r <= xgmii_retransmit_32b32b_fifo_0to0_tx_w;
 ////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -176,6 +179,7 @@ xgmii_retransmit_32b32b_fifo xgmii_retransmit_32b32b_fifo_0to1_u
     .clk_tx (xgmii_retransmit_32b32b_fifo_0to1_clk_tx_w),
     .tx     (xgmii_retransmit_32b32b_fifo_0to1_tx_w    )
 );
+always @(posedge xgmii_retransmit_32b32b_fifo_0to1_clk_tx_w) xgmii_retransmit_32b32b_fifo_0to1_tx_r <= xgmii_retransmit_32b32b_fifo_0to1_tx_w;
 ////////////////////////////////////////////////////////////////////////////////
 
 endmodule
