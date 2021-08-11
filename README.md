@@ -20,6 +20,37 @@ The payload of the block is scrambled with a self-synchronizing scrambler polino
 ### decoding
 10GBASE-R has special control codes for signaling start of frames, terminate frames, idle and so on. Decoder in PCS is mapping this codes and translate in XGMII interface.
 ## Pcs TX
+PCS TX used the reverse operations as is PCS RX for packing XGMII interface in 66bit blocks and transfer it to pma output interface.
 ## Verification
+Verification RX and TX PCS is based on connection of serial links by Intel 10Gbaser-R core and developed PCS. 
+
+<p align="center">
+  <img src="./dut.PNG">
+</p>
+
+for running tests:
+```
+cd ./lib/test/g10Baser_g10Pma/
+make
+```
+
+list of tests:
+* test_r1_lin_b64_b64_linkup - link fail test
+* test_r1_lin_b1500_b1500_linkup - link fail test 
+* test_r1_lin_b64_b1500_linkup - link fail test   
+* test_r1_rnd_b64_b1500_linkup - link fail test 
+* test_r100_lin_b64_b64 - 64 byte length packets, 100% line input rate
+* test_r100_lin_b1500_b1500 - 1500 byte length packets, 100% line input rate
+* test_r100_lin_b64_b1500 - 64-1500 byte length packets(linear counter), 100% line input rate
+* test_r100_rnd_b64_b1500 - 64-1500 byte length packets(random), 100% line input rate
+* test_r50_lin_b64_b64 - 64 byte length packets, 50% line input rate
+* test_r50_lin_b1500_b1500 - 1500 byte length packets, 50% line input rate
+* test_r50_lin_b64_b1500 - 64-1500 byte length packets(linear counter), 50% line input rate
+* test_r50_rnd_b64_b1500 - 64-1500 byte length packets(random), 50% line input rate
+* test_r10_lin_b64_b64 - 64 byte length packets, 10% line input rate
+* test_r10_lin_b1500_b1500 - 1500 byte length packets, 10% line input rate
+* test_r10_lin_b64_b1500 - 64-1500 byte length packets(linear counter), 10% line input rate
+* test_r10_rnd_b64_b1500 - 64-1500 byte length packets(random), 10% line input rate
+
 ## Resources
 ## Latency
