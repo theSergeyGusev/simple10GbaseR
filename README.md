@@ -33,6 +33,11 @@ for running tests:
 cd ./lib/test/g10Baser_g10Pma/
 make
 ```
+after finishing, all tests must be PASS 
+
+<p align="center">
+  <img src="./test_pass.PNG">
+</p>
 
 list of tests:
 * test_r1_lin_b64_b64_linkup - link fail test
@@ -53,4 +58,12 @@ list of tests:
 * test_r10_rnd_b64_b1500 - 64-1500 byte length packets(random), 10% line input rate
 
 ## Resources
+
+|                            | pcs_rx_32b_u | pcs_tx_32b_u |
+| -------------------------- | ------------ | ------------ |
+|ALMs needed                 |          396 |          320 |
+|ALMs used in final placement|          419 |          360 |
+|Combinational ALUTs         |          556 |          454 |
+|Dedicated Logic Registers   |          428 |          351 |
+
 ## Latency
