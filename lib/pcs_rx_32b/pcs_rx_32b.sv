@@ -28,7 +28,6 @@ wire        blsync_rx_block_lock_w ;
 wire        blsync_rx_slp_w        ;
 
 wire        descrambler_rx_32b_clk_w    ;   
-wire        descrambler_rx_32b_rst_w    ;   
 wire [31:0] descrambler_rx_32b_din_w    ;   
 wire [ 1:0] descrambler_rx_32b_ctrlin_w ;   
 wire        descrambler_rx_32b_din_en_w ;

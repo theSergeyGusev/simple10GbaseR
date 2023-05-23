@@ -28,15 +28,15 @@ always @(posedge clk) header_ena_valid_r   <= header_ena_valid_w  ;
 always @(posedge clk) header_ena_invalid_r <= header_ena_invalid_w;
 
 always @(posedge clk) begin
-    if      (rst                                      ) begin sh_cnt_r <= 0; end
-    else if (reset_cnt_w                              ) begin sh_cnt_r <= 0; end
-    else if (header_ena_valid_r | header_ena_invalid_r) begin sh_cnt_r <= sh_cnt_r + 1; end
+    if      (rst                                      ) begin sh_cnt_r <= 6'd0; end
+    else if (reset_cnt_w                              ) begin sh_cnt_r <= 6'd0; end
+    else if (header_ena_valid_r | header_ena_invalid_r) begin sh_cnt_r <= sh_cnt_r + 6'd1; end
 end
 
 always @(posedge clk) begin
-    if      (rst                 ) begin sh_invalid_cnt_r <= 0; end
-    else if (reset_cnt_w         ) begin sh_invalid_cnt_r <= 0; end
-    else if (header_ena_invalid_r) begin sh_invalid_cnt_r <= sh_invalid_cnt_r + 1; end
+    if      (rst                 ) begin sh_invalid_cnt_r <= 5'd0; end
+    else if (reset_cnt_w         ) begin sh_invalid_cnt_r <= 5'd0; end
+    else if (header_ena_invalid_r) begin sh_invalid_cnt_r <= sh_invalid_cnt_r + 5'd1; end
 end
 
 always @(posedge clk) begin

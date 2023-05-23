@@ -11,23 +11,16 @@ module align_rx_32b
 );
 
 reg [5:0]  cnt_r        = 0;
-reg [5:0]  cnt_1r       = 0;
 reg [1:0]  ctrl_r       = 0;
-reg [31:0] data_r       = 0;
 reg [31:0] din_r        = 0;
 reg        dout_en_r    = 0;
 reg        dout_en_zero_r=0;
-reg        err_ctrl_r   = 0;
-reg        sleep_r      = 0;
-reg        sleep_cnt_r  = 0;
-reg        sleep_even_r = 0;
 
 wire [31:0] dout_w;
 wire        even_w;
-wire        cnt_w;
 wire [1:0]  ctrl_w;
 
-always @(posedge clk) if (cnt_r!=32) begin cnt_r <= cnt_r + 1; end else begin cnt_r <= 0; end
+always @(posedge clk) if (cnt_r!=6'd32) begin cnt_r <= cnt_r + 6'd1; end else begin cnt_r <= 6'd0; end
 always @(posedge clk) din_r  <= din;
 always @(posedge clk) dout_en_zero_r <= (cnt_r==31);
 always @(posedge clk) dout_en_r <= (rst==0) & (!dout_en_zero_r) ;

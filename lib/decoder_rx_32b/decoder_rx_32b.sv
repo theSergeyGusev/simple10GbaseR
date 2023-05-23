@@ -56,7 +56,7 @@ wire find_start_78_0_w      = even==0 & (ctrlin==2'b01) & (din[7:0]==8'h78);
 wire find_start_78_1_w      = even==1 & (ctrlin==2'b01)                             & find_start_78_0_r;
 wire find_ordset_4b_0_w     = even==0 & (ctrlin==2'b01) & (din[7:0]==8'h4b);
 wire find_ordset_4b_1_w     = even==1 & (ctrlin==2'b01) & (din[31:8]==24'h00_00_00) & find_ordset_4b_0_r;
-wire find_terminate_87_0_w  = even==0 & (ctrlin==2'b01) & (din==8'h87)&(din[31:16]==16'h00_00);
+wire find_terminate_87_0_w  = even==0 & (ctrlin==2'b01) & (din[7:0]==8'h87)&(din[31:16]==16'h00_00);
 wire find_terminate_87_1_w  = even==1 & (ctrlin==2'b01) & (din==32'h00_00_00_00)    & find_terminate_87_0_r;
 wire find_terminate_99_0_w  = even==0 & (ctrlin==2'b01) & (din[7:0]==8'h99)&(din[31:24]==8'h00);
 wire find_terminate_99_1_w  = even==1 & (ctrlin==2'b01) & (din==32'h00_00_00_00)    & find_terminate_99_0_r;

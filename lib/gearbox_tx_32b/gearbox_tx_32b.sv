@@ -13,10 +13,10 @@ module gearbox_tx_32b
 
 wire [31:0] dout_w    ;
 reg  [5:0]  cnt_r  = 0;
-reg  [31:0] dout_r = 0;
+//reg  [31:0] dout_r = 0;
 reg  [31:0] din_r  = 0;
 
-always @(posedge clk) begin if (din_en) begin cnt_r <= cnt_r + 1; end else begin cnt_r <= 0; end end
+always @(posedge clk) begin if (din_en) begin cnt_r <= cnt_r + 6'd1; end else begin cnt_r <= 6'd0; end end
 always @(posedge clk) if (din_en) din_r <= din; 
 
 assign dout_w  = (cnt_r== 0) ? ({din[29:0],ctrl             }) : (cnt_r== 1) ? ({din[29:0],din_r[31:30]}) :  
