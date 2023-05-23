@@ -57,6 +57,34 @@ if {$make_assignments} {
     set_instance_assignment -name INPUT_TERMINATION DIFFERENTIAL -to "sys_clk(n)"
     set_instance_assignment -name IO_STANDARD LVDS -to sys_clk   
     
+    set_instance_assignment -name IO_STANDARD LVDS -to ref_clk
+    set_location_assignment PIN_N7 -to ref_clk
+
+    for {set p 0} {$p<2} {incr p} {
+        #rx
+        set_instance_assignment -name XCVR_A10_RX_TERM_SEL R_R1 -to serial_rx\[$p\]
+        set_instance_assignment -name IO_STANDARD "HIGH SPEED DIFFERENTIAL I/O" -to serial_rx\[$p\]
+        set_instance_assignment -name XCVR_VCCR_VCCT_VOLTAGE 1_0V -to serial_rx\[$p\]
+        set_instance_assignment -name XCVR_A10_RX_ADP_VGA_SEL RADP_VGA_SEL_4 -to serial_rx\[$p\]
+        set_instance_assignment -name XCVR_A10_RX_ONE_STAGE_ENABLE NON_S1_MODE -to serial_rx\[$p\]
+        set_instance_assignment -name XCVR_A10_RX_EQ_DC_GAIN_TRIM NO_DC_GAIN -to serial_rx\[$p\]
+
+        set_instance_assignment -name XCVR_A10_RX_ADP_CTLE_ACGAIN_4S RADP_CTLE_ACGAIN_4S_8 -to serial_rx\[$p\]
+
+        #tx
+        set_instance_assignment -name XCVR_A10_TX_TERM_SEL R_R1 -to serial_tx\[$p\]
+        set_instance_assignment -name IO_STANDARD "HIGH SPEED DIFFERENTIAL I/O" -to serial_tx\[$p\]
+        set_instance_assignment -name XCVR_VCCR_VCCT_VOLTAGE 1_0V -to serial_tx\[$p\]
+        set_instance_assignment -name XCVR_A10_TX_VOD_OUTPUT_SWING_CTRL 31 -to serial_tx\[$p\]
+    }
+
+    set_location_assignment PIN_H5 -to serial_rx[0]
+    set_location_assignment PIN_D1 -to serial_tx[0]
+    set_location_assignment PIN_K5 -to serial_rx[1]
+    set_location_assignment PIN_E3 -to serial_tx[1]
+    set_location_assignment PIN_L3 -to serial_rx[2]
+    set_location_assignment PIN_F1 -to serial_tx[2]
+
     set_global_assignment -name SDC_FILE simple10GbaseR.sdc
 	
     set_global_assignment -name SYSTEMVERILOG_FILE ../lib/gtype.sv
@@ -68,6 +96,7 @@ if {$make_assignments} {
     set_global_assignment -name SYSTEMVERILOG_FILE ../lib/tr_pma_wrapper/tr_pma_wrapper.sv
     set_global_assignment -name SYSTEMVERILOG_FILE ../lib/decoder_rx_32b/decoder_rx_32b.sv
     set_global_assignment -name SYSTEMVERILOG_FILE ../lib/xgmii_retransmit_32b32b_fifo/xgmii_retransmit_32b32b_fifo.sv
+    set_global_assignment -name SYSTEMVERILOG_FILE ../lib/xgmii_retransmit_32b64b_fifo/xgmii_retransmit_32b64b_fifo.sv
     set_global_assignment -name SYSTEMVERILOG_FILE ../lib/pcs_rx_32b/pcs_rx_32b.sv
     set_global_assignment -name SYSTEMVERILOG_FILE ../lib/gearbox_tx_32b/gearbox_tx_32b.sv
     set_global_assignment -name SYSTEMVERILOG_FILE ../lib/align_rx_32b/align_rx_32b.sv
@@ -77,6 +106,7 @@ if {$make_assignments} {
     set_global_assignment -name SYSTEMVERILOG_FILE simple10GbaseR.sv
 
     set_global_assignment -name IP_FILE ../ip/fifo_xgmii_retransmit_32b32b.ip
+    set_global_assignment -name IP_FILE ../ip/fifo_xgmii_retransmit_64b64b.ip
     set_global_assignment -name IP_FILE ../ip/pll_644_156.ip
     set_global_assignment -name IP_FILE ../ip/tr_10g_baser.ip
     set_global_assignment -name IP_FILE ../ip/tr_10g_pma.ip
@@ -84,10 +114,10 @@ if {$make_assignments} {
     set_global_assignment -name IP_FILE ../ip/tr_rst.ip
     
     for {set p 0} {$p<2} {incr p} {
-        set_instance_assignment -name PARTITION pcs_rx_32b_$p -to PCSRX\[$p\].pcs_rx_32b_u -entity simple10GbaseR
-        set_instance_assignment -name PARTITION_COLOUR 4289724382 -to PCSRX\[$p\].pcs_rx_32b_u -entity simple10GbaseR
-        set_instance_assignment -name PARTITION pcs_tx_32b_$p -to PCSTX\[$p\].pcs_tx_32b_u -entity simple10GbaseR
-        set_instance_assignment -name PARTITION_COLOUR 4294947502 -to PCSTX\[$p\].pcs_tx_32b_u -entity simple10GbaseR
+        set_instance_assignment -name PARTITION pcs_rx_32b_$p -to PCSRX\[$p\].PMA.pcs_rx_32b_u -entity simple10GbaseR
+        set_instance_assignment -name PARTITION_COLOUR 4289724382 -to PCSRX\[$p\].PMA.pcs_rx_32b_u -entity simple10GbaseR
+        set_instance_assignment -name PARTITION pcs_tx_32b_$p -to PCSTX\[$p\].PMA.pcs_tx_32b_u -entity simple10GbaseR
+        set_instance_assignment -name PARTITION_COLOUR 4294947502 -to PCSTX\[$p\].PMA.pcs_tx_32b_u -entity simple10GbaseR
     }
 
     export_assignments

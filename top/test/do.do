@@ -18,22 +18,20 @@ sim:/top/dut_u/simple10GbaseR_u/clk_rst_u/tr_fpll_pll_cal_busy
 
 add wave -divider #pcsrx_0#
 add wave -position insertpoint  \
-{sim:/top/dut_u/simple10GbaseR_u/PCSRX[0]/pcs_rx_32b_u/clk} \
-{sim:/top/dut_u/simple10GbaseR_u/PCSRX[0]/pcs_rx_32b_u/rst} \
-{sim:/top/dut_u/simple10GbaseR_u/PCSRX[0]/pcs_rx_32b_u/pma_data} \
-{sim:/top/dut_u/simple10GbaseR_u/PCSRX[0]/pcs_rx_32b_u/pma_slip} \
-{sim:/top/dut_u/simple10GbaseR_u/PCSRX[0]/pcs_rx_32b_u/pma_sync} \
-{sim:/top/dut_u/simple10GbaseR_u/PCSRX[0]/pcs_rx_32b_u/xgmii_rx}
+{sim:/top/dut_u/simple10GbaseR_u/PCSRX[0]/PMA/pcs_rx_32b_u/clk} \
+{sim:/top/dut_u/simple10GbaseR_u/PCSRX[0]/PMA/pcs_rx_32b_u/rst} \
+{sim:/top/dut_u/simple10GbaseR_u/PCSRX[0]/PMA/pcs_rx_32b_u/pma_data} \
+{sim:/top/dut_u/simple10GbaseR_u/PCSRX[0]/PMA/pcs_rx_32b_u/pma_slip} \
+{sim:/top/dut_u/simple10GbaseR_u/PCSRX[0]/PMA/pcs_rx_32b_u/pma_sync} \
+{sim:/top/dut_u/simple10GbaseR_u/PCSRX[0]/PMA/pcs_rx_32b_u/xgmii_rx}
 
 add wave -divider #pcsrx_1#
 add wave -position insertpoint  \
-{sim:/top/dut_u/simple10GbaseR_u/PCSRX[1]/pcs_rx_32b_u/clk} \
-{sim:/top/dut_u/simple10GbaseR_u/PCSRX[1]/pcs_rx_32b_u/rst} \
-{sim:/top/dut_u/simple10GbaseR_u/PCSRX[1]/pcs_rx_32b_u/pma_data} \
-{sim:/top/dut_u/simple10GbaseR_u/PCSRX[1]/pcs_rx_32b_u/pma_slip} \
-{sim:/top/dut_u/simple10GbaseR_u/PCSRX[1]/pcs_rx_32b_u/pma_sync} \
-{sim:/top/dut_u/simple10GbaseR_u/PCSRX[1]/pcs_rx_32b_u/xgmii_rx}
-
-
+{sim:/top/dut_u/simple10GbaseR_u/PCSRX[1]/PMA/pcs_rx_32b_u/clk} \
+{sim:/top/dut_u/simple10GbaseR_u/PCSRX[1]/PMA/pcs_rx_32b_u/rst} \
+{sim:/top/dut_u/simple10GbaseR_u/PCSRX[1]/PMA/pcs_rx_32b_u/pma_data} \
+{sim:/top/dut_u/simple10GbaseR_u/PCSRX[1]/PMA/pcs_rx_32b_u/pma_slip} \
+{sim:/top/dut_u/simple10GbaseR_u/PCSRX[1]/PMA/pcs_rx_32b_u/pma_sync} \
+{sim:/top/dut_u/simple10GbaseR_u/PCSRX[1]/PMA/pcs_rx_32b_u/xgmii_rx}
 
 run -a

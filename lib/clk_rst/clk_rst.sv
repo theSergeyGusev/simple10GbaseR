@@ -27,7 +27,7 @@ wire  tr_fpll_pll_powerdown_w  ;
 wire  tr_fpll_pll_locked_w     ;
 wire  tr_fpll_tx_serial_clk_w  ;
 wire  tr_fpll_pll_cal_busy_w   ; 
-    
+   
 wire pll_644_156_pll_refclk0_w  ;
 wire pll_644_156_pll_powerdown_w;
 wire pll_644_156_pll_locked_w   ;

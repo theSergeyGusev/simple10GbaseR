@@ -12,6 +12,8 @@ module dut
     xgmii_if.DutRx baserRx
 );
 
+localparam NUM_TR = 3;
+
 wire      tr_baser_wrapper_clk_glbl_w              ;
 wire      tr_baser_wrapper_rst_glbl_w              ;
 wire      tr_baser_wrapper_clk_156_w               ;
@@ -39,12 +41,12 @@ wire  tr_fpll_pll_locked_w     ;
 wire  tr_fpll_tx_serial_clk_w  ;
 wire  tr_fpll_pll_cal_busy_w   ; 
 
-wire simple10GbaseR_serial_rx_w [1:0];
-wire simple10GbaseR_serial_tx_w [1:0];
+wire simple10GbaseR_serial_rx_w [NUM_TR-1:0];
+wire simple10GbaseR_serial_tx_w [NUM_TR-1:0];
 
 //////////////////////////////////////////////////////////////////////////
-reg baserTx_rst = 1; always @(posedge tr_baser_wrapper_xgmii_tx_clk_w) baserTx_rst <= !(top.dut_u.simple10GbaseR_u.TRPMA[0].tr_pma_wrapper_u.pma_tx_rdy); 
-reg baserTx_rdy = 0; always @(posedge tr_baser_wrapper_xgmii_tx_clk_w) baserTx_rdy <=  (top.dut_u.simple10GbaseR_u.TRPMA[0].tr_pma_wrapper_u.pma_tx_rdy & top.dut_u.simple10GbaseR_u.PCSRX[0].pcs_rx_32b_u.pma_sync & top.dut_u.simple10GbaseR_u.PCSRX[1].pcs_rx_32b_u.pma_sync); 
+reg baserTx_rst = 1; always @(posedge tr_baser_wrapper_xgmii_tx_clk_w) baserTx_rst <= !(top.dut_u.simple10GbaseR_u.TR[0].PMA.tr_pma_wrapper_u.pma_tx_rdy); 
+reg baserTx_rdy = 0; always @(posedge tr_baser_wrapper_xgmii_tx_clk_w) baserTx_rdy <=  (top.dut_u.simple10GbaseR_u.TR[0].PMA.tr_pma_wrapper_u.pma_tx_rdy & top.dut_u.simple10GbaseR_u.PCSRX[0].PMA.pcs_rx_32b_u.pma_sync & top.dut_u.simple10GbaseR_u.PCSRX[1].PMA.pcs_rx_32b_u.pma_sync); 
 
 assign baserTx.clk = tr_baser_wrapper_xgmii_tx_clk_w;
 assign baserTx.rst = baserTx_rst;
@@ -60,8 +62,11 @@ assign baserRx.ena  = tr_baser_wrapper_xgmii_rx_w.ena ;
 //////////////////////////////////////////////////////////////////////////
 assign simple10GbaseR_serial_rx_w[0] = tr_baser_wrapper_tx_serial_w;
 assign simple10GbaseR_serial_rx_w[1] = simple10GbaseR_serial_tx_w[1];
+assign simple10GbaseR_serial_rx_w[2] = simple10GbaseR_serial_tx_w[2];
 
-simple10GbaseR simple10GbaseR_u
+simple10GbaseR 
+#(.NUM_TR(NUM_TR))
+simple10GbaseR_u
 (
     .sys_clk   (clk_glbl                  ),
     .ref_clk   (clk_ref                   ), 

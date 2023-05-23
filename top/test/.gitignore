@@ -6,6 +6,7 @@ tr_10g_pma/
 tr_fpll/
 tr_rst/
 fifo_xgmii_retransmit_32b32b/
+fifo_xgmii_retransmit_64b64b/
 *.vstf
 *.wlf
 wlf*
