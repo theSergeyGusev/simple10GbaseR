@@ -61,4 +61,23 @@ dut dut_u
     .pmaRx   (if_pmaRx   )
 );
 
+//int file   = $fopen("dump.bin","wb"); // open in binary mode
+//initial begin
+//if (!file) begin
+//    $error("File could not be open");
+//    $finish(); 
+//end
+//
+//    while (top.dut_u.pcs_rx_32b_pma_sync_w !== 1 | top.dut_u.pcs_rx_32b_u.align_rx_32b_u.dout_en) begin
+//        @(posedge top.dut_u.tr_pma_wrapper_pma_rx_clk_w);
+//    end
+//    while(1) begin
+//        $fwrite(file, "%c", top.dut_u.tr_pma_wrapper_pma_rx_w[ 7: 0]);
+//        $fwrite(file, "%c", top.dut_u.tr_pma_wrapper_pma_rx_w[15: 8]);
+//        $fwrite(file, "%c", top.dut_u.tr_pma_wrapper_pma_rx_w[23:16]);
+//        $fwrite(file, "%c", top.dut_u.tr_pma_wrapper_pma_rx_w[31:24]);
+//        @(posedge top.dut_u.tr_pma_wrapper_pma_rx_clk_w);
+//    end
+//end
+
 endmodule

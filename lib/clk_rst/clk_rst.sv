@@ -6,6 +6,9 @@ module clk_rst
     output wire clk_glbl,
     output wire rst_glbl,
 
+    output wire clk_156,
+    output wire rst_156,
+
     input  wire refclk,
     input  wire tr_fpll_powerdown,
     output wire tr_fpll_pll_locked,   
@@ -25,6 +28,12 @@ wire  tr_fpll_pll_locked_w     ;
 wire  tr_fpll_tx_serial_clk_w  ;
 wire  tr_fpll_pll_cal_busy_w   ; 
     
+wire pll_644_156_pll_refclk0_w  ;
+wire pll_644_156_pll_powerdown_w;
+wire pll_644_156_pll_locked_w   ;
+wire pll_644_156_outclk0_w      ;
+wire pll_644_156_pll_cal_busy_w ;
+
 reg [RST_WIDTH-1:0] rst_count_r = 0;
 reg                 rst_glbl_r  = 0;
 
@@ -61,6 +70,23 @@ tr_fpll tr_fpll_u
 assign tr_fpll_pll_locked    = tr_fpll_pll_locked_w     ;
 assign tr_fpll_tx_serial_clk = tr_fpll_tx_serial_clk_w  ;  
 assign tr_fpll_pll_cal_busy  = tr_fpll_pll_cal_busy_w   ;
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+assign pll_644_156_pll_refclk0_w   = refclk;
+assign pll_644_156_pll_powerdown_w = 0;
+
+pll_644_156 pll_644_156_u
+(
+    .pll_refclk0   (pll_644_156_pll_refclk0_w  ), // input 
+    .pll_powerdown (pll_644_156_pll_powerdown_w), // input 
+    .pll_locked    (pll_644_156_pll_locked_w   ), // output
+    .outclk0       (pll_644_156_outclk0_w      ), // output
+    .pll_cal_busy  (pll_644_156_pll_cal_busy_w )  // output
+);
+
+assign clk_156 = pll_644_156_outclk0_w;
+sync #(.LENGHT(2),.INIT(1)) sync_rst_156_u (.clk(clk_156),.in(!pll_644_156_pll_locked_w),.out(rst_156));    
 ////////////////////////////////////////////////////////////////////////////////
 
 endmodule
